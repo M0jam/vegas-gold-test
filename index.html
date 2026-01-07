@@ -1,0 +1,525 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vegas Gold — Royal Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link rel="stylesheet" href="src/css/modern_ui.css">
+</head>
+  <body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="icon-camera" viewBox="0 0 24 24">
+      <path d="M4 7h4l2-2h4l2 2h4v12H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <circle cx="12" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    </symbol>
+    <symbol id="icon-save" viewBox="0 0 24 24">
+      <path d="M5 3h14v18H5z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M5 9h14" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <rect x="7" y="5" width="6" height="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M4 21c0-4 4-7 8-7s8 3 8 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="icon-id" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="8" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M14 10h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M14 14h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="M5 13l4 4 10-10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+
+  <!-- LOADER -->
+  <div id="loader">
+      <div class="loader-content">
+          <h1 style="color:var(--gold-primary); font-family:var(--font-heading); font-size:40px; margin-bottom:10px;">VEGAS GOLD</h1>
+          <p style="color:var(--text-muted); letter-spacing:3px; text-transform:uppercase; font-size:12px;">Royal Edition</p>
+          <div style="margin-top:30px;">
+              <i class="fas fa-circle-notch fa-spin" style="color:var(--gold-primary); font-size:30px;"></i>
+          </div>
+      </div>
+  </div>
+
+  <!-- BIG WIN OVERLAY -->
+  <div id="big-win" class="modal-overlay" style="z-index:9999;">
+      <div style="text-align:center; animation: bounceIn 1s;">
+          <h1 style="font-size:80px; color:var(--gold-light); text-shadow:0 0 50px var(--gold-primary); margin:0;">BIG WIN</h1>
+          <div id="win-overlay-val" style="font-size:60px; color:#fff; font-weight:bold; font-family:var(--font-heading);">V$ 10,000</div>
+      </div>
+  </div>
+
+  <!-- BACKGROUND -->
+  <div id="bg-canvas"></div>
+  <div class="flash-overlay"></div>
+  <div class="golden-beam beam-1"></div>
+  <div class="golden-beam beam-2"></div>
+
+  <!-- APP CONTAINER -->
+  <div class="app-container">
+      
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+          <div class="brand-logo">
+              <h1>VEGAS GOLD</h1>
+              <div class="brand-subtitle">ROYAL EDITION</div>
+          </div>
+          
+          <nav class="nav-menu">
+              <div class="nav-item active" onclick="app.nav('home')">
+                  <div class="nav-icon"><i class="fas fa-home"></i></div>
+                  <div>Lobby</div>
+              </div>
+              <div class="nav-item" onclick="app.nav('slots')">
+                  <div class="nav-icon"><i class="fas fa-dice"></i></div>
+                  <div>Slots</div>
+              </div>
+              <div class="nav-item" onclick="app.nav('blackjack')">
+                  <div class="nav-icon"><i class="fas fa-heart"></i></div>
+                  <div>Blackjack</div>
+              </div>
+              <div class="nav-item" onclick="app.nav('poker')">
+                  <div class="nav-icon"><i class="fas fa-spade"></i></div>
+                  <div>Poker</div>
+              </div>
+              <div class="nav-item" onclick="app.nav('roulette')">
+                  <div class="nav-icon"><i class="fas fa-compact-disc"></i></div>
+                  <div>Roulette</div>
+              </div>
+              <div class="nav-item" onclick="app.nav('mines')">
+                  <div class="nav-icon"><i class="fas fa-bomb"></i></div>
+                  <div>Mines</div>
+              </div>
+              <div class="nav-item" onclick="app.nav('plinko')">
+                  <div class="nav-icon"><i class="fas fa-circle"></i></div>
+                  <div>Plinko</div>
+              </div>
+              <div class="nav-item" onclick="app.nav('wheel')">
+                  <div class="nav-icon"><i class="fas fa-dharmachakra"></i></div>
+                  <div>Wheel</div>
+              </div>
+              <div class="nav-item" onclick="app.nav('market')">
+                  <div class="nav-icon"><i class="fas fa-store"></i></div>
+                  <div>Shop</div>
+              </div>
+          </nav>
+      </aside>
+
+      <!-- TOP HEADER -->
+      <header class="top-header">
+          <!-- Mobile Toggle -->
+          <div class="mobile-menu-toggle" style="display:none;">
+              <i class="fas fa-bars"></i>
+          </div>
+          
+          <div style="flex:1;"></div> <!-- Spacer -->
+
+          <div class="user-stats-bar">
+              <div class="stat-item">
+                  <span class="stat-label">Balance</span>
+                  <span class="stat-value" style="display:flex; align-items:center; gap:5px;">
+                      V$ <span id="balance-disp">1,000</span>
+                  </span>
+              </div>
+              <div class="stat-item">
+                  <span class="stat-label">Level <span id="lvl-badge">1</span></span>
+                  <div class="xp-bar-container" id="xp-bar-container">
+                      <div class="xp-fill" id="xp-fill"></div>
+                      <div class="xp-text" id="xp-text">0 / 1000 XP</div>
+                  </div>
+              </div>
+              
+              <!-- User Profile / Auth -->
+              <div id="auth-ui" class="user-profile-widget hidden" style="position:relative;">
+                  <div class="stat-item" style="align-items:flex-end; margin-right:10px;">
+                      <span class="stat-label">Welcome</span>
+                      <span class="stat-value" style="font-size:14px;" id="username-disp">Player</span>
+                  </div>
+                  <div class="avatar-circle" onclick="ProfileSystem.toggleDropdown()">
+                      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User" class="avatar-img" id="header-avatar">
+                  </div>
+
+                  <!-- PROFILE DROPDOWN -->
+                  <div id="profile-dropdown" class="profile-dropdown hidden">
+                      <div class="dropdown-header">
+                          <div class="dropdown-user-info">
+                              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" id="dropdown-avatar" class="avatar-sm">
+                              <div>
+                                  <div id="dropdown-name" class="dropdown-name"><i class="fas fa-crown" style="color:var(--gold-primary); margin-right:6px;"></i>Player Name</div>
+                                  <div id="dropdown-level" class="dropdown-meta">Level 1 Member</div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="dropdown-tabs">
+                          <button class="tab-btn active" onclick="ProfileSystem.switchTab('profile')"><i class="fas fa-user"></i>Profile</button>
+                          <button class="tab-btn" onclick="ProfileSystem.switchTab('settings')"><i class="fas fa-cog"></i>Settings</button>
+                          <button class="tab-btn" onclick="ProfileSystem.switchTab('stats')"><i class="fas fa-chart-line"></i>Stats</button>
+                      </div>
+
+                      <div class="dropdown-content"></div>
+
+                      <div class="dropdown-footer">
+                          <button class="gold-btn secondary full-width" onclick="app.logout()">Logout</button>
+                      </div>
+                  </div>
+              </div>
+
+              <div id="guest-ui" class="user-profile-widget">
+                  <button class="gold-btn" onclick="app.enterGame('auth')">LOGIN</button>
+              </div>
+          </div>
+      </header>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+          
+          <!-- HOME SECTION -->
+          <section id="home" class="section active">
+              <div style="text-align:center; margin-bottom:50px;">
+                  <h1 style="font-size:48px; margin-bottom:10px; text-shadow:0 0 20px rgba(212,175,55,0.5);">Welcome to Vegas Gold</h1>
+                  <p style="color:var(--text-muted);">Experience the ultimate luxury casino simulation</p>
+                  
+                  <!-- Jackpot Ticker -->
+                  <div style="margin-top:30px; font-family:var(--font-heading); font-size:32px; color:var(--gold-light);">
+                      JACKPOT: V$ <span id="jackpot-display">1,245,920</span>
+                  </div>
+              </div>
+
+              <h3 style="border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px; margin-bottom:20px;">Featured Games</h3>
+              
+              <div class="games-grid">
+                  <div class="game-card" onclick="app.nav('slots')">
+                      <div class="icon-box">🎰</div>
+                      <h3>Royal Slots</h3>
+                      <p>Classic 3-reel action</p>
+                  </div>
+                  <div class="game-card" onclick="app.nav('blackjack')">
+                      <div class="icon-box">🃏</div>
+                      <h3>Blackjack</h3>
+                      <p>Beat the dealer to 21</p>
+                  </div>
+                  <div class="game-card" onclick="app.nav('poker')">
+                      <div class="icon-box">♠️</div>
+                      <h3>Poker</h3>
+                      <p>Texas Hold'em</p>
+                  </div>
+                  <div class="game-card" onclick="app.nav('roulette')">
+                      <div class="icon-box">🎡</div>
+                      <h3>Roulette</h3>
+                      <p>Spin the wheel of fortune</p>
+                  </div>
+                  <div class="game-card" onclick="app.nav('mines')">
+                      <div class="icon-box">💣</div>
+                      <h3>Royal Mines</h3>
+                      <p>Find diamonds, avoid mines</p>
+                  </div>
+                  <div class="game-card" onclick="app.nav('plinko')">
+                      <div class="icon-box">⚪</div>
+                      <h3>Plinko</h3>
+                      <p>Drop the ball for multipliers</p>
+                  </div>
+                  <div class="game-card" onclick="app.nav('wheel')">
+                      <div class="icon-box">☸️</div>
+                      <h3>Fortune Wheel</h3>
+                      <p>Daily rewards spin</p>
+                  </div>
+              </div>
+          </section>
+
+          <!-- SLOTS SECTION -->
+          <section id="slots" class="section game-section">
+              <div class="slot-machine-modern" id="slot-machine">
+                  <div class="reels-container-3d">
+                      <div class="reel-3d-col"><div class="reel-strip" id="reel-0"></div></div>
+                      <div class="reel-3d-col"><div class="reel-strip" id="reel-1"></div></div>
+                      <div class="reel-3d-col"><div class="reel-strip" id="reel-2"></div></div>
+                      <div class="win-line" id="slot-win-line"></div>
+                  </div>
+                  
+                  <div class="slot-controls">
+                      <div class="stat-item">
+                          <span class="stat-label">Bet</span>
+                          <input type="number" id="slot-bet" value="10" class="form-control input-sm">
+                      </div>
+                      
+                      <button class="gold-btn" id="spin-btn" onclick="Slots.spin()">SPIN</button>
+                      <button class="gold-btn secondary" id="auto-spin-btn" style="padding:12px 15px;"><i class="fas fa-sync"></i></button>
+                      
+                      <div class="stat-item">
+                          <span class="stat-label">Win</span>
+                          <span class="stat-value" id="slot-win-disp" style="color:var(--accent-success);">0</span>
+                      </div>
+                  </div>
+                  <div style="text-align:center; margin-top:10px; font-size:12px; color:var(--text-muted);">
+                      Last Win: <span id="last-win" style="color:var(--gold-light);">V$0</span>
+                  </div>
+              </div>
+          </section>
+
+          <!-- BLACKJACK SECTION -->
+          <section id="blackjack" class="section game-section">
+              <div class="bj-table">
+                  <!-- Dealer Area -->
+                  <div style="text-align:center; margin-bottom:40px;">
+                      <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:10px;">DEALER PAYS 3 TO 2</div>
+                      <div id="bj-dealer-cards" style="height:140px; display:flex; justify-content:center;">
+                          <div class="bj-card"><div class="bj-card-inner"><div class="bj-card-back"></div></div></div>
+                      </div>
+                      <div id="bj-dealer-score" style="margin-top:10px; font-weight:bold; color:var(--text-muted); opacity:0;">0</div>
+                  </div>
+
+                  <!-- Player Area -->
+                  <div style="text-align:center; margin-top:40px;">
+                      <div id="bj-player-cards" style="height:140px; display:flex; justify-content:center;"></div>
+                      <div id="bj-player-score" style="margin-top:10px; font-weight:bold; color:var(--gold-light);">0</div>
+                  </div>
+
+                  <!-- Message Area -->
+                  <div id="bj-msg" style="display:none; text-align:center; margin:20px 0;">
+                      <h2 id="bj-result-text" style="color:var(--gold-primary); text-shadow:0 0 10px rgba(0,0,0,0.8);">YOU WIN!</h2>
+                      <div id="bj-win-amount" style="font-size:24px; color:var(--accent-success);">+ V$ 100</div>
+                      <button class="gold-btn" onclick="Blackjack.reset()" style="margin-top:15px;">PLAY AGAIN</button>
+                  </div>
+
+                  <!-- Controls -->
+                  <div id="bj-bet-controls" style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:30px;">
+                       <div class="stat-item">
+                           <span class="stat-label">Bet</span>
+                           <input type="number" id="bj-bet" value="50" class="form-control" style="width:100px; text-align:center;">
+                       </div>
+                       <button class="gold-btn" onclick="Blackjack.addBet(10)">+10</button>
+                       <button class="gold-btn" onclick="Blackjack.deal()">DEAL</button>
+                  </div>
+
+                  <div id="bj-play-controls" style="display:none; justify-content:center; gap:20px; margin-top:30px;">
+                      <button class="gold-btn secondary" onclick="Blackjack.hit()" id="btn-hit">HIT</button>
+                      <button class="gold-btn secondary" onclick="Blackjack.stand()" id="btn-stand">STAND</button>
+                  </div>
+                  
+                  <div style="text-align:center; margin-top:20px; font-size:12px; color:var(--text-muted);">
+                       Current Bet: <span id="bj-current-bet">0</span> | Balance: <span id="bj-balance">0</span>
+                  </div>
+              </div>
+          </section>
+
+          <!-- POKER SECTION -->
+          <section id="poker" class="section game-section">
+              <div class="poker-table">
+                  <!-- Community Cards -->
+                  <div style="text-align:center;">
+                      <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:10px;">COMMUNITY CARDS</div>
+                      <div id="poker-community" class="poker-community-area"></div>
+                      <div class="poker-pot-display">POT: V$ <span id="poker-pot">0</span></div>
+                  </div>
+
+                  <!-- Player Hand -->
+                  <div style="text-align:center;">
+                      <div id="poker-hand" class="poker-hand-area"></div>
+                      <div id="poker-status" style="margin-top:10px; font-weight:bold; color:var(--gold-light);">PREFLOP</div>
+                  </div>
+
+                  <!-- Controls -->
+                  <div id="poker-start-controls" style="display:flex; justify-content:center; margin-top:20px;">
+                      <button class="gold-btn" onclick="Poker.startGame()">DEAL HAND (V$50)</button>
+                  </div>
+
+                  <div id="poker-controls" style="display:none; justify-content:center; gap:15px; margin-top:20px;">
+                      <button class="gold-btn secondary" id="poker-fold-btn" onclick="Poker.fold()">FOLD</button>
+                      <button class="gold-btn" id="poker-call-btn" onclick="Poker.call()">CALL / CHECK</button>
+                      <button class="gold-btn" id="poker-raise-btn" onclick="Poker.raise()">RAISE</button>
+                  </div>
+              </div>
+          </section>
+
+          <!-- ROULETTE SECTION -->
+          <section id="roulette" class="section game-section">
+              <div class="roulette-container">
+                  <div class="roulette-wheel-visual" id="roulette-wheel-visual">
+                      <div id="roulette-result" style="z-index:11;">0</div>
+                  </div>
+                  
+                  <div id="roulette-msg" style="height:30px; font-weight:bold; color:var(--gold-primary);">PLACE YOUR BETS</div>
+
+                  <div style="display:flex; gap:20px; align-items:center;">
+                       <div class="stat-item">
+                           <span class="stat-label">Bet Amount</span>
+                           <input type="number" id="roulette-bet-amount" value="50" class="form-control" style="width:100px; text-align:center;">
+                       </div>
+                  </div>
+
+                  <div class="roulette-board">
+                      <div class="roulette-num green" onclick="Roulette.bet('green')">0</div>
+                      <!-- Simplified Red/Black Betting for now as per JS logic -->
+                      <div class="roulette-num red" onclick="Roulette.bet('red')" style="grid-column: span 1; width:100px;">RED (x2)</div>
+                      <div class="roulette-num black" onclick="Roulette.bet('black')" style="grid-column: span 1; width:100px;">BLACK (x2)</div>
+                      <div class="roulette-num green" onclick="Roulette.bet('green')" style="grid-column: span 1; width:100px;">GREEN (x14)</div>
+                  </div>
+                  
+                  <p style="font-size:12px; color:var(--text-muted); max-width:400px; text-align:center;">
+                      Select a color to place your bet. Win 2x on Red/Black, 14x on Green (0).
+                  </p>
+              </div>
+          </section>
+
+          <!-- MINES SECTION -->
+          <section id="mines" class="section game-section">
+              <div style="display:flex; gap:40px; justify-content:center; flex-wrap:wrap;">
+                  <!-- Sidebar Controls -->
+                  <div style="width:250px; background:var(--bg-panel); padding:20px; border-radius:12px; border:var(--glass-border);">
+                      <div style="margin-bottom:20px;">
+                          <label class="stat-label">Bet Amount</label>
+                          <input type="number" id="mines-bet" value="10" class="form-control">
+                      </div>
+                      <div style="margin-bottom:20px;">
+                          <label class="stat-label">Mines (1-24)</label>
+                          <input type="number" id="mines-count" value="3" min="1" max="24" class="form-control">
+                      </div>
+                      <button class="gold-btn" id="mines-start-btn" onclick="Mines.start()" style="width:100%;">BET</button>
+                      <button class="gold-btn secondary" id="mines-cashout-btn" onclick="Mines.cashout()" style="width:100%; margin-top:10px; display:none;">
+                          CASHOUT <br><span id="mines-cashout-val" style="color:var(--accent-success);">V$ 0</span>
+                      </button>
+                      
+                      <div style="margin-top:20px; text-align:center;">
+                          <div class="stat-label">Next Tile</div>
+                          <div style="font-size:20px; color:var(--accent-success);" id="mines-next-mult">1.15x</div>
+                      </div>
+
+                      <div style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">
+                          <div class="stat-label" style="margin-bottom:10px;">History</div>
+                          <div id="mines-history" style="display:flex; flex-wrap:wrap; gap:5px; justify-content:center;"></div>
+                      </div>
+                  </div>
+
+                  <!-- Grid -->
+                  <div class="mines-grid" id="mines-grid">
+                      <!-- Generated by JS -->
+                  </div>
+              </div>
+          </section>
+
+          <!-- PLINKO SECTION -->
+          <section id="plinko" class="section game-section">
+               <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
+                   <canvas id="plinko-canvas" width="600" height="500" class="plinko-canvas"></canvas>
+                   
+                   <div style="display:flex; gap:20px; align-items:flex-end;">
+                       <div class="stat-item">
+                           <span class="stat-label">Bet Amount</span>
+                           <input type="number" id="plinko-bet" value="10" class="form-control input-sm">
+                       </div>
+                       <button class="gold-btn" id="plinko-drop" onclick="Plinko.drop()">DROP BALL</button>
+                   </div>
+                   <div style="font-size:12px; color:var(--text-muted);">Balls dropped bounce randomly. Aim for the corners!</div>
+               </div>
+          </section>
+
+          <!-- WHEEL SECTION -->
+          <section id="wheel" class="section game-section">
+              <div class="wheel-container">
+                  <div class="wheel-pointer"></div>
+                  <canvas id="wheel-canvas" width="400" height="400" style="width:100%; height:100%; border-radius:50%; box-shadow:0 0 50px rgba(212,175,55,0.2);"></canvas>
+              </div>
+              <div style="text-align:center; margin-top:30px;">
+                  <div id="wheel-timer" style="margin-bottom:10px; font-family:var(--font-heading); color:var(--gold-light);">READY TO SPIN</div>
+                  <button class="gold-btn" id="wheel-spin-btn" onclick="Wheel.spin()">SPIN WHEEL</button>
+              </div>
+          </section>
+          
+          <!-- MARKET / SHOP -->
+          <section id="market" class="section">
+              <h2 class="section-title">Royal Shop</h2>
+              <div class="games-grid" id="shop-grid">
+                  <!-- Generated by JS -->
+              </div>
+          </section>
+
+          <!-- AUTH LOGIN/REGISTER -->
+          <section id="login" class="section">
+              <div class="modal-content" style="margin: 50px auto; max-width:400px;">
+                  <h2 id="auth-title" style="text-align:center; margin-bottom:20px;">Access Royal Club</h2>
+                  
+                  <div id="login-form">
+                      <input type="email" id="auth-email" placeholder="Email" class="form-control" style="margin-bottom:15px;">
+                      <input type="password" id="auth-pass" placeholder="Password" class="form-control" style="margin-bottom:15px;">
+                      <div id="auth-2fa-group" style="display:none; margin-bottom:15px;">
+                          <input type="text" id="auth-2fa-code" placeholder="2FA Code" class="form-control">
+                      </div>
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin:10px 0 15px 0;">
+                          <label style="font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
+                              <i class="fas fa-infinity" style="color:var(--gold-primary);"></i>
+                              Stay Logged In
+                          </label>
+                          <label class="switch">
+                              <input type="checkbox" id="auth-remember">
+                              <span class="slider round"></span>
+                          </label>
+                      </div>
+                      <button class="gold-btn" onclick="app.login()" style="width:100%;">LOGIN</button>
+                      <p style="text-align:center; margin-top:15px; font-size:12px; cursor:pointer;" onclick="app.toggleAuthMode()">New member? Join now</p>
+                  </div>
+
+                  <div id="register-form" class="hidden">
+                      <input type="text" id="reg-name" placeholder="Full Name" class="form-control" style="margin-bottom:15px;">
+                      <input type="email" id="reg-email" placeholder="Email" class="form-control" style="margin-bottom:15px;">
+                      <input type="password" id="reg-pass" placeholder="Password" class="form-control" style="margin-bottom:15px;">
+                      <button class="gold-btn" onclick="app.register()" style="width:100%;">JOIN CLUB</button>
+                      <p style="text-align:center; margin-top:15px; font-size:12px; cursor:pointer;" onclick="app.toggleAuthMode()">Already a member? Login</p>
+                  </div>
+                  
+                  <div id="auth-msg" style="text-align:center; margin-top:10px; height:20px;"></div>
+              </div>
+          </section>
+
+      </main>
+  </div>
+
+  <!-- GAME INFO MODAL -->
+  <div id="game-info-modal" class="modal-overlay">
+      <div class="modal-content">
+          <button class="modal-close-btn" onclick="app.closeGameInfo()">×</button>
+          <h2 id="game-info-title">Game Title</h2>
+          <p id="game-info-desc" style="color:var(--text-muted); line-height:1.6; margin:20px 0;">Game Description...</p>
+          <div style="display:flex; align-items:center; gap:10px; margin-top:30px;">
+              <input type="checkbox" id="game-info-check">
+              <label for="game-info-check" style="font-size:12px; color:var(--text-muted);">Don't show this again</label>
+          </div>
+          <button class="gold-btn" onclick="app.closeGameInfo()" style="width:100%; margin-top:20px;">PLAY NOW</button>
+      </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- SCRIPTS -->
+  <script src="src/js/core/audio.js"></script>
+  <script src="src/js/core/auth.js"></script>
+  <script src="src/js/core/content.js"></script>
+  <script src="src/js/core/fx.js"></script>
+  <script src="src/js/core/particles.js"></script>
+  <script src="src/js/core/profile.js"></script>
+  <script src="src/js/core/tfa.js"></script>
+  
+  <script src="src/js/features/shop.js"></script>
+  <script src="src/js/features/social.js"></script>
+  
+  <script src="src/js/games/blackjack.js"></script>
+  <script src="src/js/games/mines.js"></script>
+  <script src="src/js/games/plinko.js"></script>
+  <script src="src/js/games/poker.js"></script>
+  <script src="src/js/games/roulette.js"></script>
+  <script src="src/js/games/slots.js"></script>
+  <script src="src/js/games/wheel.js"></script>
+  
+  <script src="src/js/core/app.js"></script>
+  <script src="src/js/main.js"></script>
+
+</body>
+</html>
